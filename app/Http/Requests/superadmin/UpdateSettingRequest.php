@@ -28,6 +28,7 @@ class UpdateSettingRequest extends FormRequest
             'color_primary' => 'required|regex:/^#([a-fA-F0-9]{6})$/',
             'color_secondary' => 'required|regex:/^#([a-fA-F0-9]{6})$/',
             'color_tertiary' => 'required|regex:/^#([a-fA-F0-9]{6})$/',
+            'admin_phone' => 'required|string|max:15',
         ];
     }
 
@@ -41,6 +42,7 @@ class UpdateSettingRequest extends FormRequest
         return [
             'required' => 'The :attribute is required.',
             'regex' => 'The :attribute must be a valid hex code (e.g., #FF0000).',
+            'max' => 'The :attribute may not be greater than :max characters.',
         ];
     }
 

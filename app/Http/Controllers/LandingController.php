@@ -35,7 +35,7 @@ class LandingController extends Controller
             })->count();
         }
 
-        return view('index', [
+        return view('dashboard', [
             'facultyCount' => $facultyCount,
             'programtCount' => $programtCount,
             'kategoriCount' => $kategoriCount,

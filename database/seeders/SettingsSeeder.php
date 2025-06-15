@@ -16,6 +16,7 @@ class SettingsSeeder extends Seeder
         $settings = [
             ['key' => 'app_name', 'value' => 'My Application'],
             ['key' => 'app_alias', 'value' => 'MyApp'],
+            ['key' => 'admin_phone', 'value' => '6281234567890'],
             ['key' => 'app_description', 'value' => 'Platform Terpusat untuk Pengelolaan dan Akses Dokumen Akademik Universitas Islam Negeri Sumatera Utara.'],
             ['key' => 'color_primary', 'value' => '#007bff'],
             ['key' => 'color_secondary', 'value' => '#6c757d'],

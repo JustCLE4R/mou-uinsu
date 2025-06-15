@@ -105,6 +105,16 @@
                             @enderror
                         </div>
 
+                        <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                            <label class="form-label text-dark h6">Admin Phone Number</label>
+                            <input type="text" name="admin_phone"
+                                class="form-control @error('admin_phone') is-invalid @enderror"
+                                value="{{ old('admin_phone', $settings->admin_phone) }}">
+                            @error('admin_phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between">
                             <button class="btn btn-success mx-1 wow fadeInRight" type="submit"><i
                                     class="bi bi-check-lg"></i> Save Settings</button>

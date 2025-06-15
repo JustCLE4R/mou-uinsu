@@ -1,47 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\DokumenController;
-use App\Http\Controllers\LandingController;
-use App\Http\Controllers\admin\UserController as AdminUserController;
-use App\Http\Controllers\admin\DokumenController as AdminDokumenController;
-use App\Http\Controllers\admin\KategoriController as AdminKategoriController;
-use App\Http\Controllers\superadmin\UserController as SuperadminUserController;
-use App\Http\Controllers\superadmin\DokumenController as SuperadminDokumenController;
-use App\Http\Controllers\superadmin\SettingController as SuperadminSettingController;
-use App\Http\Controllers\superadmin\KategoriController as SuperAdminKategoriController;
-use App\Http\Controllers\superadmin\StatistikController as SuperadminStatistikController;
-use App\Http\Controllers\superadmin\DepartmentController as SuperadminDepartmentController;
 
-Route::middleware(['guest', 'no-cache', 'security-header'])->group(function () {
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'authenticate']);
+Route::view('/', 'index')->name('landing');
+Route::view('/syarat-dan-ketentuan', 'mou-submission.snk')->name('snk');
+Route::get('/submission', [\App\Http\Controllers\MouSubmissionController::class, 'create'])->name('mou-submission');
+Route::post('/submission', [\App\Http\Controllers\MouSubmissionController::class, 'store'])->name('mou-submission-store');
+Route::get('/submitted-success', [\App\Http\Controllers\MouSubmissionController::class, 'success'])->name('mou-submission.submitted');
+Route::get('/status', [\App\Http\Controllers\MouSubmissionController::class, 'status'])->name('mou-submission.status');
+
+Route::middleware(['guest', 'no-cache', 'security-header'])->group(function () {    
+    Route::get('/login', [\App\Http\Controllers\LoginController::class, 'index'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\LoginController::class, 'authenticate']);
 });
 
 Route::middleware(['auth', 'security-header'])->group(function () {
-    Route::get('/logout', [LoginController::class, 'deauthenticate']);
-    Route::get('/', [LandingController::class, 'index'])->name('dashboard')->middleware('no-cache');
-    Route::get('/daftar-dokumen', [DokumenController::class, 'getDokumen']);
-    Route::get('/dokumen/{dokumen}', [DokumenController::class, 'show'])->name('dokumen.show');
+    Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'deauthenticate']);
+    Route::get('/dashboard', [\App\Http\Controllers\LandingController::class, 'index'])->name('dashboard')->middleware('no-cache');
+    Route::get('/daftar-dokumen', [\App\Http\Controllers\DokumenController::class, 'getDokumen']);
+    Route::get('/dokumen/{dokumen}', [\App\Http\Controllers\DokumenController::class, 'show'])->name('dokumen.show');
     // Route::get('/dokumen/{dokumen}/download', [DokumenController::class, 'download']);
 });
 
 Route::prefix('admin')->middleware(['auth', 'is-admin', 'security-header'])->group(function () {
     Route::view('/', 'admin.index');
-    Route::resource('/dokumen', AdminDokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('admin.dokumen');
-    Route::resource('/kategori', AdminKategoriController::class)->parameters(['kategori' => 'kategori'])->names('admin.kategori');
-    Route::resource('/user', AdminUserController::class)->only(['edit', 'update', 'show']);
+    Route::resource('/dokumen', \App\Http\Controllers\admin\DokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('admin.dokumen');
+    Route::resource('/kategori', \App\Http\Controllers\admin\KategoriController::class)->parameters(['kategori' => 'kategori'])->names('admin.kategori');
+    Route::resource('/user', \App\Http\Controllers\admin\UserController::class)->only(['edit', 'update', 'show']);
 });
 
 Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-header'])->group(function () {
     Route::view('/', 'superadmin.index',['title' => 'Super Admin']);
-    Route::get('/statistik', [SuperadminStatistikController::class, 'index'])->name('superadmin.statistik');
-    Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('superadmin.dokumen');
-    Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
-    Route::resource('/kategori', SuperAdminKategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
-    Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
+    Route::get('/statistik', [\App\Http\Controllers\superadmin\StatistikController::class, 'index'])->name('superadmin.statistik');
+    Route::resource('/dokumen', \App\Http\Controllers\superadmin\DokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('superadmin.dokumen');
+    Route::resource('/department', \App\Http\Controllers\superadmin\DepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
+    Route::resource('/kategori', \App\Http\Controllers\superadmin\KategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
+    Route::resource('/user', \App\Http\Controllers\superadmin\UserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
+    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->names('superadmin.mou');
 
-    Route::get('/setting', [SuperadminSettingController::class, 'index'])->name('superadmin.setting.index');
-    Route::put('/setting', [SuperadminSettingController::class, 'update'])->name('superadmin.setting.update');
+    Route::get('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'index'])->name('superadmin.setting.index');
+    Route::put('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'update'])->name('superadmin.setting.update');
 });

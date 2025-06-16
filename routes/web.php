@@ -36,7 +36,7 @@ Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-head
     Route::resource('/department', \App\Http\Controllers\superadmin\DepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
     Route::resource('/kategori', \App\Http\Controllers\superadmin\KategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
     Route::resource('/user', \App\Http\Controllers\superadmin\UserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
-    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->names('superadmin.mou');
+    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->except(['create', 'store', 'edit', 'destroy'])->names('superadmin.mou');
 
     Route::get('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'index'])->name('superadmin.setting.index');
     Route::put('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'update'])->name('superadmin.setting.update');

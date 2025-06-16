@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
             ['revisions' => 10], 
             ...array_fill(0, 1412, ['revisions' => fake()->biasedNumberBetween(0, 10, 'sqrt')])
         )->create();
+
+        $this->call(MouSubmissionSeeder::class);
     }
 
     /**

@@ -42,21 +42,23 @@ class MouSubmissionController extends Controller
             }
         }
 
-        if (isset($data['cooperation_scope'])) {
-            $data['cooperation_scope'] = json_encode($data['cooperation_scope']);
-        }
-
-        $data['reference_number'] = self::generateReferenceNumber();
+        $data['reference_number'] = self::generateReferenceNumber($data['institution_name']);
 
         MouSubmissions::create($data);
 
         // Notify the partner via WhatsApp
-        $partnerInfo = "Nama: {$data['institution_name']}\n" .
+        $message = "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\n" . 
+                        "MOU submission received\n\n" .
+                        "Reference Number: *{$data['reference_number']}*\n\n" .
+                        "Informasi Institusi:\n" .
+                        "Nama: {$data['institution_name']}\n" .
                         "Jenis: {$data['institution_type']}\n" .
                         "Alamat: {$data['institution_address']}\n".
-                        "Website: {$data['institution_website']}\n";
+                        "Website: {$data['institution_website']}\n\n" .
+                        "Cek status MOU di: https://mou.uinsu.ac.id/status?reference_number={$data['reference_number']}\n\n" .
+                        "╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n";
 
-        WhatsappGateway::send($data['pic_phone'], "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\nMOU submission received\n\nReference Number: *{$data['reference_number']}*\n\nInformasi Institusi:\n{$partnerInfo}\n\nCek status MOU di: https://mou.uinsu.ac.id/status\n╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n");
+        WhatsappGateway::send($data['pic_phone'], $message);
 
         // Notify admin via WhatsApp
 
@@ -68,13 +70,18 @@ class MouSubmissionController extends Controller
             $data['pic_phone'] = '62' . substr($data['pic_phone'], 1);
         }
 
-        $partnerInfo = "Nama: {$data['institution_name']}\n" .
+        $adminMessage = "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\n" . 
+                        "New MOU submission received\n\n" .
+                        "Reference Number: *{$data['reference_number']}*\n\n" .
+                        "Informasi Institusi:\n" .
+                        "Nama: {$data['institution_name']}\n" .
                         "Jenis: {$data['institution_type']}\n" .
                         "Alamat: {$data['institution_address']}\n".
                         "Website: {$data['institution_website']}\n".
-                        "Whatsapp: wa.me/{$data['pic_phone']}";
+                        "Whatsapp: wa.me/{$data['pic_phone']}\n\n" .
+                        "╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n";
 
-        WhatsappGateway::send($adminPhone, "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\nNew MOU submission received\n\nReference Number: *{$data['reference_number']}*\n\nInformasi Institusi:\n{$partnerInfo}\n\n╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n");
+        WhatsappGateway::send($adminPhone, $adminMessage);
         
 
         return redirect(route('mou-submission.submitted'))->with('data', $data)->with('success', 'MOU submission created successfully.');
@@ -84,7 +91,7 @@ class MouSubmissionController extends Controller
     public function success()
     {
         if (!session()->has('data')) {
-            return redirect('/mou-submission')->with('error', 'No submission data found.');
+            return redirect(route('mou-submission'))->with('error', 'No submission data found.');
         }
 
         return view('mou-submission.success');
@@ -105,11 +112,20 @@ class MouSubmissionController extends Controller
         return view('mou-submission.status', ['submission' => $submission]);
     }
 
-    public static function generateReferenceNumber()
+    public static function generateReferenceNumber($institutionName)
     {
-        $last = MouSubmissions::latest()->first();
-        $number = $last ? $last->id + 1 : 1;
-        return 'MOU-UINSU-' . now()->year . '-' . str_pad($number, 4, '0', STR_PAD_LEFT);
+        $year = now()->year;
+        // $timestamp = now()->timestamp;
+        $timestamp = (int)(microtime(true) * 1000);
+        
+        // Create a hash from institution name and timestamp
+        $combined = $institutionName . $timestamp;
+        $hash = hash('md5', $combined);
+        
+        // Take last 6 characters and convert to uppercase
+        $randomPart = strtoupper(substr($hash, -6));
+
+        return "MOU-UINSU-{$year}-{$randomPart}";
     }
 
 }

@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
         try {
             if (Schema::hasTable('settings')) {
-                $settings = (object) Cache::rememberForever('app_settings', function () {
-                    return Setting::pluck('value', 'key')->toArray();
+                $settings = Cache::rememberForever('app_settings', function () {
+                    return (object) Setting::pluck('value', 'key')->toArray();
                 });
     
                 View::share('settings', $settings);

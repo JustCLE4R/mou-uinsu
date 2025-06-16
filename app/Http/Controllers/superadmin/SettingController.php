@@ -33,6 +33,6 @@ class SettingController extends Controller
             return (object) Setting::pluck('value', 'key')->toArray();
         });
 
-        return back()->with('success', 'Settings updated successfully!');
+        return redirect()->route('superadmin.setting.index')->with('success', 'Settings updated successfully!');
     }
 }

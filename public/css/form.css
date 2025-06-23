@@ -16,6 +16,7 @@ overflow-x: hidden;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
 .containers .regis {
@@ -44,6 +45,8 @@ overflow-x: hidden;
     min-height: 1030px;
     background-color: #fff;
     width: 100%;
+    
+
 }
 
 .containers form .form {
@@ -156,6 +159,7 @@ form .buttons button , .backBtn{
 @media (max-width: 750px) {
     .containers form{
         overflow-y: scroll;
+        overflow-x:hidden;
     }
     .containers form::-webkit-scrollbar{
        display: none;

@@ -1,305 +1,390 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengajuan MOU - {{ config('app.name') }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Pengajuan</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="css/bootstrap2.min.css" rel="stylesheet" />
+
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link href="css/form.css" rel="stylesheet" />
+
 </head>
-<body>
-  <div class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="card shadow">
-          <div class="card-header bg-primary text-white">
-            <h3 class="card-title mb-0">Form Pengajuan MOU</h3>
-            <small>Silakan lengkapi formulir berikut untuk mengajukan kerja sama</small>
-          </div>
-          <div class="card-body">
-            <form method="POST" action="{{ route('mou-submission-store') }}" enctype="multipart/form-data">
-              @csrf
 
-              <!-- Informasi Mitra -->
-              <h4 class="mt-4">Informasi Mitra</h4>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="institution_name" class="form-label">Nama Lembaga/Instansi</label>
-                  <input type="text" class="form-control @error('institution_name') is-invalid @enderror" 
-                         id="institution_name" name="institution_name" value="{{ old('institution_name') }}" required>
-                  @error('institution_name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="institution_type" class="form-label">Jenis Institusi</label>
-                  <select class="form-select @error('institution_type') is-invalid @enderror" 
-                          id="institution_type" name="institution_type" required>
-                    <option selected disabled>Pilih jenis institusi...</option>
-                    <option value="SMK" {{ old('institution_type') == 'SMK' ? 'selected' : '' }}>SMK</option>
-                    <option value="SMA" {{ old('institution_type') == 'SMA' ? 'selected' : '' }}>SMA</option>
-                    <option value="Perguruan Tinggi" {{ old('institution_type') == 'Perguruan Tinggi' ? 'selected' : '' }}>Perguruan Tinggi</option>
-                    <option value="Vendor" {{ old('institution_type') == 'Vendor' ? 'selected' : '' }}>Vendor</option>
-                    <option value="Brand" {{ old('institution_type') == 'Brand' ? 'selected' : '' }}>Brand</option>
-                    <option value="Pemerintah" {{ old('institution_type') == 'Pemerintah' ? 'selected' : '' }}>Pemerintah</option>
-                    <option value="Lainnya" {{ old('institution_type') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
-                  </select>
-                  @error('institution_type')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label for="institution_address" class="form-label">Alamat Lengkap</label>
-                  <textarea class="form-control @error('institution_address') is-invalid @enderror" 
-                            id="institution_address" name="institution_address" rows="2" required>{{ old('institution_address') }}</textarea>
-                  @error('institution_address')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="institution_website" class="form-label">Website (Opsional)</label>
-                  <input type="url" class="form-control @error('institution_website') is-invalid @enderror" 
-                         id="institution_website" name="institution_website" value="{{ old('institution_website') }}">
-                  @error('institution_website')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
+<body class="topics-listing-page" id="top">
+    <main>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="img/logo.png" width="150px" alt="" />
+                </a>
 
-              <!-- Kontak Penanggung Jawab -->
-              <h4 class="mt-4">Kontak Penanggung Jawab</h4>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="pic_name" class="form-label">Nama PIC</label>
-                  <input type="text" class="form-control @error('pic_name') is-invalid @enderror" 
-                         id="pic_name" name="pic_name" value="{{ old('pic_name') }}" required>
-                  @error('pic_name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
+                <div class="d-lg-none ms-auto me-4">
+                    <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="pic_position" class="form-label">Jabatan</label>
-                  <input type="text" class="form-control @error('pic_position') is-invalid @enderror" 
-                         id="pic_position" name="pic_position" value="{{ old('pic_position') }}" required>
-                  @error('pic_position')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="pic_phone" class="form-label">No. Telepon / HP</label>
-                  <input type="text" class="form-control @error('pic_phone') is-invalid @enderror" 
-                         id="pic_phone" name="pic_phone" value="{{ old('pic_phone') }}" required>
-                  @error('pic_phone')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="pic_email" class="form-label">Email</label>
-                  <input type="email" class="form-control @error('pic_email') is-invalid @enderror" 
-                         id="pic_email" name="pic_email" value="{{ old('pic_email') }}" required>
-                  @error('pic_email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
 
-              <!-- Dokumen Upload -->
-              <h4 class="mt-4">Dokumen Pendukung</h4>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Surat Permohonan</label>
-                  <input type="file" class="form-control @error('letter_file') is-invalid @enderror" 
-                         name="letter_file" accept=".pdf,.doc,.docx">
-                  @error('letter_file')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Proposal Kerja Sama</label>
-                  <input type="file" class="form-control @error('proposal_file') is-invalid @enderror" 
-                         name="proposal_file" accept=".pdf,.doc,.docx">
-                  @error('proposal_file')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Profil Lembaga</label>
-                  <input type="file" class="form-control @error('profile_file') is-invalid @enderror" 
-                         name="profile_file" accept=".pdf,.doc,.docx">
-                  @error('profile_file')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Draft MOU/MOA</label>
-                  <input type="file" class="form-control @error('draft_mou_file') is-invalid @enderror" 
-                         name="draft_mou_file" accept=".pdf,.doc,.docx">
-                  @error('draft_mou_file')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Akta Pendirian</label>
-                  <input type="file" class="form-control @error('legal_doc_akta') is-invalid @enderror" 
-                         name="legal_doc_akta" accept=".pdf">
-                  @error('legal_doc_akta')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">NIB / TDP / SIUP</label>
-                  <input type="file" class="form-control @error('legal_doc_nib') is-invalid @enderror" 
-                         name="legal_doc_nib" accept=".pdf">
-                  @error('legal_doc_nib')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Izin Operasional</label>
-                  <input type="file" class="form-control @error('legal_doc_operasional') is-invalid @enderror" 
-                         name="legal_doc_operasional" accept=".pdf">
-                  @error('legal_doc_operasional')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-              <!-- Informasi Kerja Sama -->
-              <h4 class="mt-4">Detail Pengajuan MOU</h4>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="cooperation_title" class="form-label">Judul Kerja Sama</label>
-                  <input type="text" class="form-control @error('cooperation_title') is-invalid @enderror" 
-                         id="cooperation_title" name="cooperation_title" value="{{ old('cooperation_title') }}" required>
-                  @error('cooperation_title')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label for="cooperation_description" class="form-label">Deskripsi Tujuan</label>
-                  <textarea class="form-control @error('cooperation_description') is-invalid @enderror" 
-                            id="cooperation_description" name="cooperation_description" rows="2" required>{{ old('cooperation_description') }}</textarea>
-                  @error('cooperation_description')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label class="form-label">Ruang Lingkup</label>
-                  <div class="form-check">
-                    <input class="form-check-input @error('cooperation_scope') is-invalid @enderror" 
-                           type="checkbox" name="cooperation_scope[]" value="Pendidikan" id="scope1"
-                           {{ is_array(old('cooperation_scope')) && in_array('Pendidikan', old('cooperation_scope')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="scope1">Pendidikan</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input @error('cooperation_scope') is-invalid @enderror" 
-                           type="checkbox" name="cooperation_scope[]" value="Penelitian" id="scope2"
-                           {{ is_array(old('cooperation_scope')) && in_array('Penelitian', old('cooperation_scope')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="scope2">Penelitian</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input @error('cooperation_scope') is-invalid @enderror" 
-                           type="checkbox" name="cooperation_scope[]" value="Magang" id="scope3"
-                           {{ is_array(old('cooperation_scope')) && in_array('Magang', old('cooperation_scope')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="scope3">Magang</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input @error('cooperation_scope') is-invalid @enderror" 
-                           type="checkbox" name="cooperation_scope[]" value="Sponsor" id="scope4"
-                           {{ is_array(old('cooperation_scope')) && in_array('Sponsor', old('cooperation_scope')) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="scope4">Sponsor Event</label>
-                  </div>
-                  @error('cooperation_scope')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label for="planned_activities" class="form-label">Rencana Kegiatan</label>
-                  <textarea class="form-control @error('planned_activities') is-invalid @enderror" 
-                            id="planned_activities" name="planned_activities" rows="2" required>{{ old('planned_activities') }}</textarea>
-                  @error('planned_activities')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="target_unit" class="form-label">Unit Tujuan di Kampus</label>
-                  <input type="text" class="form-control @error('target_unit') is-invalid @enderror" 
-                         id="target_unit" name="target_unit" value="{{ old('target_unit') }}" required>
-                  @error('target_unit')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="start_date" class="form-label">Tanggal Mulai</label>
-                  <input type="date" class="form-control @error('start_date') is-invalid @enderror" 
-                         id="start_date" name="start_date" value="{{ old('start_date') }}">
-                  @error('start_date')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="end_date" class="form-label">Tanggal Selesai</label>
-                  <input type="date" class="form-control @error('end_date') is-invalid @enderror" 
-                         id="end_date" name="end_date" value="{{ old('end_date') }}">
-                  @error('end_date')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
+                <div class="collapse justify-content-center navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto" style="padding-right: 109px">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_1">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_2">Pengajuan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Login</a>
+                        </li>
+                    </ul>
 
-              <!-- Informasi Tambahan -->
-              <h4 class="mt-4">Informasi Tambahan</h4>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="signing_location" class="form-label">Lokasi Penandatanganan</label>
-                  <input type="text" class="form-control @error('signing_location') is-invalid @enderror" 
-                         id="signing_location" name="signing_location" value="{{ old('signing_location') }}">
-                  @error('signing_location')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
+                    <div class="d-none d-lg-block">
+                        <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                    </div>
                 </div>
-                <div class="col-md-12 mb-3">
-                  <label for="special_request" class="form-label">Permintaan Khusus</label>
-                  <textarea class="form-control @error('special_request') is-invalid @enderror" 
-                            id="special_request" name="special_request" rows="2">{{ old('special_request') }}</textarea>
-                  @error('special_request')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label for="additional_notes" class="form-label">Catatan Tambahan</label>
-                  <textarea class="form-control @error('additional_notes') is-invalid @enderror" 
-                            id="additional_notes" name="additional_notes" rows="2">{{ old('additional_notes') }}</textarea>
-                  @error('additional_notes')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
+            </div>
+        </nav>
 
-              <!-- Persetujuan -->
-              <div class="form-check mb-4">
-                <input class="form-check-input @error('agree') is-invalid @enderror" 
-                       type="checkbox" value="1" id="agree" name="agree" 
-                       {{ old('agree') ? 'checked' : '' }} required>
-                <label class="form-check-label" for="agree">
-                  Saya menyetujui semua <a href="{{ route('snk') }}" target="_blank">syarat dan ketentuan</a> pengajuan kerja sama ini.
-                </label>
-                @error('agree')
-                  <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-              </div>
+        <header class="site-header d-flex flex-column justify-content-center align-items-center">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">Beranda</a>
+                                </li>
 
-              <!-- Submit -->
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
-                <button type="submit" class="btn btn-primary">Ajukan MOU</button>
-              </div>
-            </form>
-          </div>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Pengajuan MOU
+                                </li>
+                            </ol>
+                        </nav>
+
+                        <h2 class="text-white">Pengajuan MOU</h2>
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="containers">
+                            <h5>Form Pengajuan MOU</h5>
+
+                            <form method="POST" action="{{ route('mou-submission-store') }}"
+                                enctype="multipart/form-data">
+                                @csrf
+
+                                <!-- STEP 1 -->
+                                <div class="form first">
+                                    <h6 class="mt-4">Informasi Mitra</h6>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="institution_name" class="form-label">Nama
+                                                Lembaga/Instansi</label>
+                                            <input type="text"
+                                                class="form-control @error('institution_name') is-invalid @enderror"
+                                                id="institution_name" name="institution_name"
+                                                value="{{ old('institution_name') }}" required>
+                                            @error('institution_name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="institution_type" class="form-label">Jenis Institusi</label>
+                                            <select class="form-select @error('institution_type') is-invalid @enderror"
+                                                id="institution_type" name="institution_type" required>
+                                                <option selected disabled>Pilih jenis institusi...</option>
+                                                @foreach (['SMK', 'SMA', 'Perguruan Tinggi', 'Vendor', 'Brand', 'Pemerintah', 'Lainnya'] as $type)
+                                                    <option value="{{ $type }}"
+                                                        {{ old('institution_type') == $type ? 'selected' : '' }}>
+                                                        {{ $type }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('institution_type')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="institution_address" class="form-label">Alamat Lengkap</label>
+                                            <textarea class="form-control @error('institution_address') is-invalid @enderror" id="institution_address"
+                                                name="institution_address" rows="2" required>{{ old('institution_address') }}</textarea>
+                                            @error('institution_address')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="institution_website" class="form-label">Website
+                                                (Opsional)</label>
+                                            <input type="url"
+                                                class="form-control @error('institution_website') is-invalid @enderror"
+                                                id="institution_website" name="institution_website"
+                                                value="{{ old('institution_website') }}">
+                                            @error('institution_website')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <h6 class="mt-4">Kontak Penanggung Jawab</h6>
+                                    <div class="row">
+                                        @foreach ([['pic_name', 'Nama PIC'], ['pic_position', 'Jabatan'], ['pic_phone', 'No. Telepon / HP'], ['pic_email', 'Email']] as [$field, $label])
+                                            <div class="col-md-6 mb-3">
+                                                <label for="{{ $field }}"
+                                                    class="form-label">{{ $label }}</label>
+                                                <input type="{{ $field == 'pic_email' ? 'email' : 'text' }}"
+                                                    class="form-control @error($field) is-invalid @enderror"
+                                                    id="{{ $field }}" name="{{ $field }}"
+                                                    value="{{ old($field) }}" required>
+                                                @error($field)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <h6 class="mt-4">Dokumen Pendukung</h6>
+                                    <div class="row">
+                                        @php
+                                            $documents = [
+                                                'letter_file' => 'Surat Permohonan',
+                                                'proposal_file' => 'Proposal Kerja Sama',
+                                                'profile_file' => 'Profil Lembaga',
+                                                'draft_mou_file' => 'Draft MOU/MOA',
+                                                'legal_doc_akta' => 'Akta Pendirian',
+                                                'legal_doc_nib' => 'NIB / TDP / SIUP',
+                                                'legal_doc_operasional' => 'Izin Operasional',
+                                            ];
+                                        @endphp
+                                        @foreach ($documents as $name => $label)
+                                            <div
+                                                class="col-md-{{ in_array($name, ['legal_doc_akta', 'legal_doc_nib', 'legal_doc_operasional']) ? '4' : '6' }} mb-3">
+                                                <label class="form-label">{{ $label }}</label>
+                                                <input type="file"
+                                                    class="form-control @error($name) is-invalid @enderror"
+                                                    name="{{ $name }}" accept=".pdf,.doc,.docx">
+                                                @error($name)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="d-flex justify-content-end mt-4">
+                                        <button type="button" class="btn btn-primary nextBtn">
+                                            Selanjutnya <i class="bi bi-chevron-right ms-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- STEP 2 -->
+                                <div class="form second">
+                                    <h6 class="mt-4">Detail Pengajuan MOU</h6>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="cooperation_title" class="form-label">Judul Kerja Sama</label>
+                                            <input type="text"
+                                                class="form-control @error('cooperation_title') is-invalid @enderror"
+                                                id="cooperation_title" name="cooperation_title"
+                                                value="{{ old('cooperation_title') }}" required>
+                                            @error('cooperation_title')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="cooperation_description" class="form-label">Deskripsi
+                                                Tujuan</label>
+                                            <textarea class="form-control @error('cooperation_description') is-invalid @enderror" id="cooperation_description"
+                                                name="cooperation_description" rows="2" required>{{ old('cooperation_description') }}</textarea>
+                                            @error('cooperation_description')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Ruang Lingkup</label>
+                                            <div>
+                                                @foreach (['Pendidikan', 'Penelitian', 'Magang', 'Sponsor'] as $scope)
+                                                    <div class="form-check form-check-inline">
+                                                        <input
+                                                            class="form-check-input @error('cooperation_scope') is-invalid @enderror"
+                                                            type="checkbox" name="cooperation_scope[]"
+                                                            value="{{ $scope }}"
+                                                            id="scope_{{ $loop->index }}"
+                                                            {{ is_array(old('cooperation_scope')) && in_array($scope, old('cooperation_scope')) ? 'checked' : '' }}>
+                                                        <label class="form-check-label"
+                                                            for="scope_{{ $loop->index }}">{{ $scope }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            @error('cooperation_scope')
+                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <label for="planned_activities" class="form-label">Rencana
+                                                Kegiatan</label>
+                                            <textarea class="form-control @error('planned_activities') is-invalid @enderror" id="planned_activities"
+                                                name="planned_activities" rows="2" required>{{ old('planned_activities') }}</textarea>
+                                            @error('planned_activities')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="target_unit" class="form-label">Unit Tujuan di Kampus</label>
+                                            <input type="text"
+                                                class="form-control @error('target_unit') is-invalid @enderror"
+                                                id="target_unit" name="target_unit" value="{{ old('target_unit') }}"
+                                                required>
+                                            @error('target_unit')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="start_date" class="form-label">Tanggal Mulai</label>
+                                            <input type="date"
+                                                class="form-control @error('start_date') is-invalid @enderror"
+                                                id="start_date" name="start_date" value="{{ old('start_date') }}">
+                                            @error('start_date')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="end_date" class="form-label">Tanggal Selesai</label>
+                                            <input type="date"
+                                                class="form-control @error('end_date') is-invalid @enderror"
+                                                id="end_date" name="end_date" value="{{ old('end_date') }}">
+                                            @error('end_date')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <h6 class="mt-4">Informasi Tambahan</h6>
+                                    <div class="row">
+                                        @foreach ([['signing_location', 'Lokasi Penandatanganan'], ['special_request', 'Permintaan Khusus'], ['additional_notes', 'Catatan Tambahan']] as [$field, $label])
+                                            <div class="col-md-12 mb-3">
+                                                <label for="{{ $field }}"
+                                                    class="form-label">{{ $label }}</label>
+                                                <textarea class="form-control @error($field) is-invalid @enderror" id="{{ $field }}"
+                                                    name="{{ $field }}" rows="2">{{ old($field) }}</textarea>
+                                                @error($field)
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input @error('agree') is-invalid @enderror"
+                                            type="checkbox" value="1" id="agree" name="agree"
+                                            {{ old('agree') ? 'checked' : '' }} required>
+                                        <label class="form-check-label" for="agree">
+                                            Saya menyetujui semua <a href="{{ route('snk') }}"
+                                                target="_blank">syarat dan ketentuan</a> pengajuan kerja sama ini.
+                                        </label>
+                                        @error('agree')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="d-flex justify-content-between w-ful">
+                                        <button type="button" class="btn btn-secondary backBtn">
+                                            <i class="bi bi-chevron-right"></i> Kembali
+                                        </button>
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-send-check"></i> Ajukan MOU
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-12 mb-4 pb-2">
+                    <a class="navbar-brand mb-2" href="index.html">
+                        <img src="img/logo.png" width="150px" alt="">
+                    </a>
+                    <p class=" small">
+                        Pusat Kerja Sama & Hubungan Luar Negeri<br />Universitas Islam
+                        Negeri Sumatera Utara
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6">
+                    <h6 class="site-footer-title mb-3">Navigasi</h6>
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="#section_1" class="site-footer-link">Beranda</a>
+                        </li>
+                        <li class="site-footer-link-item">
+                            <a href="#section_2" class="site-footer-link">Pengajuan MOU</a>
+                        </li>
+                        <li class="site-footer-link-item">
+                            <a href="#section_3" class="site-footer-link">Alur Proses</a>
+                        </li>
+                        <li class="site-footer-link-item">
+                            <a href="#section_3" class="site-footer-link">Kontak</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6 mb-4 mb-lg-0">
+                    <h6 class="site-footer-title mb-3">Informasi Kontak</h6>
+                    <p class=" d-flex mb-1">
+                        <i class="bi-telephone me-2"></i>
+                        <a href="tel:+620000000000" class="site-footer-link">+62 000-0000-0000</a>
+                    </p>
+                    <p class=" d-flex">
+                        <i class="bi-envelope me-2"></i>
+                        <a href="mailto:kerjasama@uinsu.ac.id" class="site-footer-link">kerjasama@uinsu.ac.id</a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto">
+                    <p class="copyright-text mt-lg-5 mt-4">
+                        © 2025 UINSU Medan<br />
+                        Pusat Kerja Sama & Hubungan Luar Negeri<br /><br />
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/custom.js"></script>
 </body>
+
 </html>

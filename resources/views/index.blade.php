@@ -261,7 +261,7 @@
                                                     </div>
                                                     <span class="badge bg-design rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Graduation_re_gthn.png"
+                                                <img src="img/topics/undraw_Educator_re_ju47.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -279,7 +279,7 @@
                                                     </div>
                                                     <span class="badge bg-design rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Graduation_re_gthn.png"
+                                                <img src="img/topics/undraw_Finance_re_gnv2.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -304,7 +304,7 @@
                                                     </div>
                                                     <span class="badge bg-education rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Finance_re_gnv2.png"
+                                                <img src="img/topics/undraw_professor_d7zn.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -322,7 +322,7 @@
                                                     </div>
                                                     <span class="badge bg-education rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Finance_re_gnv2.png"
+                                                <img src="img/topics/undraw_reading-book_qe4h.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -340,7 +340,7 @@
                                                     </div>
                                                     <span class="badge bg-education rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Finance_re_gnv2.png"
+                                                <img src="img/topics/undraw_Redesign_feedback_re_jvm0.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -365,7 +365,7 @@
                                                     </div>
                                                     <span class="badge bg-finance rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/colleagues-working-cozy-office-medium-shot.png"
+                                                <img src="img/topics/undraw_work-chat_hc3y.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -382,7 +382,7 @@
                                                     </div>
                                                     <span class="badge bg-finance rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/colleagues-working-cozy-office-medium-shot.png"
+                                                <img src="img/topics/undraw_scrum-board_uqku.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -425,7 +425,7 @@
                                                     </div>
                                                     <span class="badge bg-advertising rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_online_ad_re_ol62.png"
+                                                <img src="img/topics/undraw_working-remotely_ivtz.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -461,7 +461,7 @@
                                                     </div>
                                                     <span class="badge bg-advertising rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_online_ad_re_ol62.png"
+                                                <img src="img/topics/undraw_working-together_r43a.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -504,7 +504,7 @@
                                                     </div>
                                                     <span class="badge bg-music rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Podcast_audience_re_4i5q.png"
+                                                <img src="img/topics/undraw_workspace_s6wf.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -522,7 +522,7 @@
                                                     </div>
                                                     <span class="badge bg-music rounded-pill ms-auto">✅</span>
                                                 </div>
-                                                <img src="img/topics/undraw_Podcast_audience_re_4i5q.png"
+                                                <img src="img/topics/undraw_viral_tweet_gndb.png"
                                                     class="custom-block-image img-fluid" alt="" />
                                             </a>
                                         </div>
@@ -645,7 +645,7 @@
                     </p>
                     <p class=" d-flex">
                         <i class="bi-envelope me-2"></i>
-                        <a href="mailto:kerjasama@uinsu.ac.id" class="site-footer-link">kerjasama@uinsu.ac.id</a>
+                        <a href="mailto:humas@uinsu.ac.id" class="site-footer-link">humas@uinsu.ac.id</a>
                     </p>
                 </div>
 

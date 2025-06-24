@@ -103,14 +103,7 @@
                 {{ ucfirst($submission->status) }}
               </span>
             </td>
-            {{-- <td class="text-center">
-              <a class="text-primary" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i class="bi bi-pencil-square"></i></a>
-              <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post" onsubmit="return confirm('Yakin hapus pengajuan ini?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i class="bi bi-trash"></i></button>
-              </form>
-            </td> --}}
+          
           </tr>
         @endforeach
       </table>
@@ -120,8 +113,19 @@
       {{ $submissions->onEachSide(1)->links() }}
     </div>
   </div>
-  <!-- Modal -->
 
 
 </section>
 @endsection
+
+
+
+
+  {{-- <td class="text-center">
+              <a class="text-primary" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i class="bi bi-pencil-square"></i></a>
+              <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post" onsubmit="return confirm('Yakin hapus pengajuan ini?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i class="bi bi-trash"></i></button>
+              </form>
+            </td> --}}

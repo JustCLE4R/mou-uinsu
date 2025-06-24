@@ -3,19 +3,27 @@
 @section('content')
     <section class="section-padding py-5" style="margin-top: 10vh;">
         <div class="container">
+
             <div class="section-header text-center mb-5">
                 <h2 class="section-title">Preview Pengajuan MOU</h2>
                 <div class="shape mx-auto" style="width: 60px; height: 4px; background: #0d6efd; border-radius: 2px;"></div>
             </div>
 
             <div class="row justify-content-center">
+
                 <div class="col-lg-10">
-                    <div class="card shadow rounded-4 overflow-hidden" style="  background-color: #ffffff !important;;">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3 mb-md-0">
+                        <a href="/superadmin/mou" class="text-primary wow fadeInRight" ata-wow-delay="0.3s"><i
+                                class="bi bi-chevron-double-left"></i> Kembali</a>
+                    </div>
+
+                    <div class="card shadow overflow-hidden" style="  background-color: #ffffff !important;;">
+
                         <div
                             class="card-header text-dark  d-flex flex-wrap justify-content-between align-items-center py-3">
                             <h4 style="font-size: 1.5rem" class="mb-0">Detail Pengajuan</h4>
-                            <button type="button" class="btn btn-warning text-light btn-sm mt-2 mt-md-0" data-bs-toggle="modal"
-                                data-bs-target="#ubahStatusModal">
+                            <button type="button" class="btn btn-warning text-light btn-sm mt-2 mt-md-0"
+                                data-bs-toggle="modal" data-bs-target="#ubahStatusModal">
                                 <i class="bi bi-pencil-square me-1"></i> Ubah Status
                             </button>
                         </div>
@@ -134,7 +142,7 @@
                                 <div class="col-md-4">
                                     <strong>Status:</strong>
                                     <span
-                                        class="badge 
+                                        class="badge  text-light
                   @if ($submission->status == 'pending') bg-warning
                   @elseif($submission->status == 'review') bg-info
                   @elseif($submission->status == 'approved') bg-success
@@ -153,11 +161,11 @@
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <form action="{{ route('superadmin.mou.update', $submission->id) }}" method="POST"
-                                class="modal-content rounded-4 shadow-sm border-0">
+                                class="modal-content  shadow-sm border-0">
                                 @csrf
                                 @method('PATCH')
 
-                                <div class="modal-header bg-light border-bottom-0 rounded-top-4 px-4 pt-4">
+                                <div class="modal-header bg-light border-bottom-0  px-4 pt-4">
                                     <h5 class="modal-title fw-semibold text-dark" id="ubahStatusModalLabel">
                                         <i class="bi bi-pencil-square me-2 text-primary"></i> Ubah Status Pengajuan
                                     </h5>
@@ -170,10 +178,11 @@
                                 <div class="modal-body px-4">
                                     <div class="mb-3">
                                         <label for="status" class="form-label fw-medium">Status</label>
-                                        <select name="status" id="status" class=" form-select-lg mb-3" required>
+                                        <select name="status" id="status" class="  form-select-lg mb-3" required>
                                             <option value="pending"
                                                 {{ $submission->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                            <option value="review" {{ $submission->status == 'review' ? 'selected' : '' }}>
+                                            <option value="review"
+                                                {{ $submission->status == 'review' ? 'selected' : '' }}>
                                                 Review</option>
                                             <option value="approved"
                                                 {{ $submission->status == 'approved' ? 'selected' : '' }}>Approved</option>

@@ -48,14 +48,17 @@
 
                 <div class="collapse justify-content-center navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto" style="padding-right: 109px">
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/">Beranda</a>
+                       <li class="nav-item">
+                            <a class="nav-link " href="/">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="{{ route('mou-submission-store') }}">Pengajuan</a>
+                            <a class="nav-link " href="{{ route('mou-submission-store') }}">Pengajuan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/login">Login</a>
+                            <a class="nav-link " href="/status">Cek Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/login">Login</a>
                         </li>
                     </ul>
 

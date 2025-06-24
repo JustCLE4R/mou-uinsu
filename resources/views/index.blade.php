@@ -46,13 +46,16 @@
                 <div class="collapse justify-content-center navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto" style="padding-right: 109px">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/">Beranda</a>
+                            <a class="nav-link " href="/">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="{{ route('mou-submission-store') }}">Pengajuan</a>
+                            <a class="nav-link " href="{{ route('mou-submission-store') }}">Pengajuan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="/login">Login</a>
+                            <a class="nav-link " href="/status">Cek Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/login">Login</a>
                         </li>
                     </ul>
 
@@ -601,6 +604,109 @@
                                 Formulir MOU</a>
                         </p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section section-padding" id="section_4">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12">
+                        <h2 class="mb-4">Syarat & Ketentuan</h2>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="col-lg-5 col-12">
+                        <img src="img/faq_graphic.jpg" class="img-fluid" alt="FAQs">
+                    </div>
+
+                    <div class="col-lg-6 col-12 m-auto">
+                        <div class="accordion" id="accordionExample">
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true"
+                                        aria-controls="collapseOne">
+                                        Syarat dan Ketentuan Pengajuan
+                                    </button>
+                                </h2>
+
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <ol>
+                                            <li>
+                                                <strong>Data dan Dokumen:</strong>
+                                                Semua data dan dokumen yang diunggah harus benar, valid, dan dapat
+                                                dipertanggungjawabkan. Pemalsuan data dapat menyebabkan penolakan
+                                                pengajuan.
+                                            </li>
+                                            <li>
+                                                <strong>Kelengkapan Dokumen:</strong>
+                                                Pastikan seluruh dokumen pendukung (Surat Permohonan, Proposal, Profil
+                                                Lembaga, Draft MOU/MOA, Akta Pendirian, NIB/TDP/SIUP, Izin Operasional)
+                                                telah diunggah sesuai format yang diminta.
+                                            </li>
+                                            <li>
+                                                <strong>Proses Verifikasi:</strong>
+                                                Pengajuan akan diverifikasi oleh tim terkait. Proses verifikasi dapat
+                                                memerlukan waktu sesuai kelengkapan dan validitas dokumen.
+                                            </li>
+                                            <li>
+                                                <strong>Komunikasi:</strong>
+                                                Pemohon wajib memastikan kontak yang dicantumkan aktif untuk keperluan
+                                                komunikasi selama proses pengajuan.
+                                            </li>
+                                            <li>
+                                                <strong>Persetujuan:</strong>
+                                                Dengan mengajukan formulir, pemohon menyetujui bahwa data yang diberikan
+                                                dapat digunakan untuk keperluan administrasi dan komunikasi terkait
+                                                kerja sama.
+                                            </li>
+                                            <li>
+                                                <strong>Penolakan atau Pembatalan:</strong>
+                                                Pengajuan dapat ditolak atau dibatalkan jika ditemukan pelanggaran
+                                                terhadap syarat dan ketentuan ini.
+                                            </li>
+                                            <li>
+                                                <strong>Perubahan Syarat:</strong>
+                                                Pihak kampus berhak mengubah syarat dan ketentuan sewaktu-waktu tanpa
+                                                pemberitahuan terlebih dahulu.
+                                            </li>
+                                        </ol>
+                                        <p class="mt-4">
+                                            Jika ada pertanyaan lebih lanjut, silakan hubungi
+                                            <a href="mailto:info@uinsu.ac.id">info@uinsu.ac.id</a>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bagian bawah tetap bisa Anda tambahkan untuk FAQ lain jika diinginkan -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                        Pertanyaan Umum (FAQ)
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Jika Anda mengalami kendala teknis saat mengisi formulir atau mengunggah
+                                        dokumen, silakan refresh halaman atau hubungi admin teknis.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </section>

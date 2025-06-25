@@ -72,6 +72,13 @@ class MouController extends Controller
             ->with('success', 'Status pengajuan berhasil diperbarui.');
     }
 
+    public function create()
+    {
+        return view('superadmin.mou.create', [
+            'title' => 'Tambah MoU Submission',
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

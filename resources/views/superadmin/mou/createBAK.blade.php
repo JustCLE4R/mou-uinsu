@@ -20,12 +20,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <link href="css/bootstrap2.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap2.min.css" rel="stylesheet" />
 
-    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/css/bootstrap-icons.css" rel="stylesheet" />
 
-    <link href="css/templatemo-topic-listing.css" rel="stylesheet" />
-    <link href="css/form.css" rel="stylesheet" />
+    <link href="/css/templatemo-topic-listing.css" rel="stylesheet" />
+    <link href="/css/form.css" rel="stylesheet" />
 
 </head>
 
@@ -384,10 +384,10 @@
     </footer>
 
     <!-- JAVASCRIPT FILES -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery.sticky.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 
 </html>

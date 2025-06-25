@@ -22,7 +22,7 @@
                         <div
                             class="card-header text-dark  d-flex flex-wrap justify-content-between align-items-center py-3">
                             <h4 style="font-size: 1.5rem" class="mb-0">Detail Pengajuan</h4>
-                            <button type="button" class="btn btn-warning text-light btn-sm mt-2 mt-md-0"
+                            <button type="button" class="btn btn-primary text-light btn-sm mt-2 mt-md-0"
                                 data-bs-toggle="modal" data-bs-target="#ubahStatusModal">
                                 <i class="bi bi-pencil-square me-1"></i> Ubah Status
                             </button>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-md-6"><strong>Jenis Institusi:</strong> {{ $submission->institution_type }}
                                 </div>
-                                <div class="col-md-12"><strong>Alamat:</strong> {{ $submission->institution_address }}</div>
+                                <div class="col-md-6"><strong>Alamat:</strong> {{ $submission->institution_address }}</div>
                                 <div class="col-md-6"><strong>Website:</strong> <a
                                         href="{{ $submission->institution_website }}"
                                         target="_blank">{{ $submission->institution_website ?? '-' }}</a></div>
@@ -109,18 +109,18 @@
                             <div class="row mb-3 g-3">
                                 <div class="col-md-6"><strong>Judul:</strong> {{ $submission->cooperation_title }}</div>
                                 <div class="col-md-6"><strong>Unit Tujuan:</strong> {{ $submission->target_unit }}</div>
-                                <div class="col-md-12"><strong>Deskripsi:</strong>
+                                <div class="col-md-6"><strong>Deskripsi:</strong>
                                     {{ $submission->cooperation_description }}</div>
-                                <div class="col-md-12"><strong>Ruang Lingkup:</strong>
-                                    @php $scopes = json_decode($submission->cooperation_scope, true) ?? []; @endphp
+                                <div class="col-md-6"><strong>Ruang Lingkup:</strong>
+                                    @php $scopes = $submission->cooperation_scope @endphp
                                     @foreach ($scopes as $scope)
                                         <span class="badge bg-info text-light me-1">{{ $scope }}</span>
                                     @endforeach
                                 </div>
-                                <div class="col-md-12"><strong>Rencana Kegiatan:</strong>
+                                <div class="col-md-6"><strong>Rencana Kegiatan:</strong>
                                     {{ $submission->planned_activities }}</div>
-                                <div class="col-md-3"><strong>Tanggal Mulai:</strong> {{ $submission->start_date }}</div>
-                                <div class="col-md-3"><strong>Tanggal Selesai:</strong> {{ $submission->end_date }}</div>
+                                <div class="col-md-6"><strong>Tanggal Mulai:</strong> {{ $submission->start_date }}</div>
+                                <div class="col-md-6"><strong>Tanggal Selesai:</strong> {{ $submission->end_date }}</div>
                             </div>
 
                             <!-- Informasi Tambahan -->

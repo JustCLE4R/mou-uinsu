@@ -131,7 +131,7 @@
                                     top: 35%;
                                     left: 0;
                                     height: 3px;
-                                    background: linear-gradient(90deg, #6c757d, #dee2e6);
+                                    background: white;
                                     width: 100%;
                                     z-index: 1;
                                 }
@@ -222,19 +222,19 @@
                                     <h4>
                                         @switch($status)
                                             @case('pending')
-                                                <span class="text-warning">Menunggu verifikasi admin.</span>
+                                                <span class="btn btn-warning">Menunggu verifikasi admin.</span>
                                             @break
 
                                             @case('review')
-                                                <span class="text-primary">Pengajuan sedang ditinjau.</span>
+                                                <span class="btn btn-primary">Pengajuan sedang ditinjau.</span>
                                             @break
 
                                             @case('approved')
-                                                <span class="text-success">Pengajuan telah disetujui.</span>
+                                                <span class="btn btn-success">Pengajuan telah disetujui.</span>
                                             @break
 
                                             @case('rejected')
-                                                <span class="text-danger">Pengajuan ditolak.</span>
+                                                <span class="btn btn-danger">Pengajuan ditolak.</span>
                                             @break
 
                                             @default

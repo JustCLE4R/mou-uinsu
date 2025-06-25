@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'index')->name('landing');
+Route::get('/', [\App\Http\Controllers\LandingPublicController::class, 'index'])->name('landing');
 Route::view('/syarat-dan-ketentuan', 'mou-submission.snk')->name('snk');
 Route::get('/submission', [\App\Http\Controllers\MouSubmissionController::class, 'create'])->name('mou-submission');
 Route::post('/submission', [\App\Http\Controllers\MouSubmissionController::class, 'store'])->name('mou-submission-store');
@@ -36,7 +36,7 @@ Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-head
     Route::resource('/department', \App\Http\Controllers\superadmin\DepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
     Route::resource('/kategori', \App\Http\Controllers\superadmin\KategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
     Route::resource('/user', \App\Http\Controllers\superadmin\UserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
-    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->except(['create', 'store', 'edit', 'destroy'])->names('superadmin.mou');
+    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->except(['edit', 'destroy'])->names('superadmin.mou');
 
     Route::get('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'index'])->name('superadmin.setting.index');
     Route::put('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'update'])->name('superadmin.setting.update');

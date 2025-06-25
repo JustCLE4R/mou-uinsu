@@ -25,10 +25,12 @@
     </div>
 </div>
   <div class="container border rounded shadow p-4" style="width:90%;">
+    <a href="/superadmin"  class="text-primary wow fadeInRight mb-5" ata-wow-delay="0.3s"><i class="bi bi-chevron-double-left"></i> Kembali</a>
     <div class="row justify-content-between pb-4">
+      
       <div class="col-lg-4 col-md-6 col-sm-12 mb-2 mb-md-0">
-        <a href="/superadmin"  class="text-primary wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-chevron-double-left"></i> Kembali</a>
-        {{-- <a href="/superadmin/dokumen/create" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i class="bi bi-plus"></i> Tambah Dokumen</a> --}}
+        
+        <a href="{{ route('superadmin.mou.create') }}" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i class="bi bi-plus"></i> Tambah Dokumen</a>
       </div>
       <div class="col-lg-5 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="{{ route('superadmin.mou.index') }}" method="get">

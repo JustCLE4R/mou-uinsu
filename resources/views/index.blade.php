@@ -70,25 +70,185 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 col-12 mx-auto">
-                        <h1 class="text-white text-center">
-                            UINSU Medan Membuka Peluang Kerja Sama (MOU)
-                        </h1>
-
+                        <h1 class="text-white text-center">Cek Status MOU Anda</h1>
                         <h6 class="text-center">
-                            Kami mengundang lembaga, instansi, sekolah, industri, dan mitra
-                            strategis lainnya untuk membangun kolaborasi yang berdampak.
+                            Kami mengundang lembaga, instansi, sekolah, industri, dan mitra strategis lainnya untuk
+                            membangun kolaborasi yang berdampak.
                         </h6>
 
-                        <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+                        <form method="GET" action="{{ route('mou-submission.status') }}"
+                            class="custom-form mt-4 pt-2 mb-lg-0 mb-5">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text bi-search" id="basic-addon1"></span>
-
-                                <input name="keyword" type="search" class="form-control" id="keyword"
-                                    placeholder="Cari informasi kerja sama, bidang, mitra..." aria-label="Search" />
-
-                                <button type="submit" class="form-control">Cari</button>
+                                <input style="margin-bottom: 0px !important; border: none !important;"
+                                    name="reference_number" type="text" class="form-control" id="reference_number"
+                                    placeholder="Masukkan nomor referensi pengajuan"
+                                    value="{{ request('reference_number') }}" required />
+                                <button type="submit" class="btn btn-primary">Cari</button>
                             </div>
                         </form>
+
+
+                        @if (!empty($submission))
+                            @php
+                                $steps = [
+                                    'pending' => 'Menunggu',
+                                    'review' => 'Ditinjau',
+                                    'finish' => 'Disetujui/Ditolak',
+                                ];
+                                $status = $submission->status;
+                                $stepKeys = array_keys($steps);
+                                $currentStep = $status === 'pending' ? 0 : ($status === 'review' ? 1 : 2);
+                            @endphp
+
+                            <style>
+                                .step-wrapper-animated {
+                                    display: flex;
+                                    justify-content: center;
+                                    position: relative;
+                                    margin-bottom: 3rem;
+                                }
+
+                                .text-primary {
+                                    color: black !important;
+                                }
+
+                                .text-secondary {
+                                    color: #13547a !important;
+                                }
+
+                                .step-line-animated {
+                                    position: absolute;
+                                    top: 35%;
+                                    left: 0;
+                                    height: 3px;
+                                    background: linear-gradient(90deg, #6c757d, #dee2e6);
+                                    width: 100%;
+                                    z-index: 1;
+                                }
+
+                                .step-item-animated {
+                                    position: relative;
+                                    text-align: center;
+                                    width: 120px;
+                                    z-index: 2;
+                                    animation: fadeInUp 0.8s ease-in-out;
+                                }
+
+                                .step-circle-animated {
+                                    width: 55px;
+                                    height: 55px;
+                                    margin: auto;
+                                    border-radius: 50%;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                                }
+
+                                @keyframes fadeInUp {
+                                    from {
+                                        opacity: 0;
+                                        transform: translateY(15px);
+                                    }
+
+                                    to {
+                                        opacity: 1;
+                                        transform: translateY(0);
+                                    }
+                                }
+                            </style>
+
+                            <div class="mt-5">
+                                <h2 class="mb-4 text-center">Status Pengajuan MOU</h2>
+
+                                <div class="step-wrapper-animated">
+                                    <div class="step-line-animated"></div>
+                                    @foreach ($steps as $key => $label)
+                                        @php
+                                            $idx = $loop->index;
+                                            if ($key === 'finish') {
+                                                if ($status === 'approved') {
+                                                    $circleClass = 'bg-success';
+                                                    $icon = '<i class="bi bi-check-lg text-white"></i>';
+                                                    $label = 'Disetujui';
+                                                } elseif ($status === 'rejected') {
+                                                    $circleClass = 'bg-danger';
+                                                    $icon = '<i class="bi bi-x-lg text-white"></i>';
+                                                    $label = 'Ditolak';
+                                                } else {
+                                                    $circleClass =
+                                                        $currentStep > $idx
+                                                            ? 'bg-success'
+                                                            : ($currentStep == $idx
+                                                                ? 'bg-primary'
+                                                                : 'bg-secondary');
+                                                    $icon = $loop->iteration;
+                                                }
+                                            } else {
+                                                $circleClass =
+                                                    $currentStep > $idx
+                                                        ? 'bg-success'
+                                                        : ($currentStep == $idx
+                                                            ? 'bg-primary'
+                                                            : 'bg-secondary');
+                                                $icon =
+                                                    $currentStep > $idx
+                                                        ? '<i class="bi bi-check-lg text-white"></i>'
+                                                        : $loop->iteration;
+                                            }
+                                        @endphp
+                                        <div class="step-item-animated mx-2">
+                                            <div class="step-circle-animated {{ $circleClass }}">
+                                                {!! $icon !!}
+                                            </div>
+                                            <div class="mt-2 fw-semibold text-secondary small">{{ $label }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <h4>
+                                        @switch($status)
+                                            @case('pending')
+                                                <span class="text-warning">Menunggu verifikasi admin.</span>
+                                            @break
+
+                                            @case('review')
+                                                <span class="text-primary">Pengajuan sedang ditinjau.</span>
+                                            @break
+
+                                            @case('approved')
+                                                <span class="text-success">Pengajuan telah disetujui.</span>
+                                            @break
+
+                                            @case('rejected')
+                                                <span class="text-danger">Pengajuan ditolak.</span>
+                                            @break
+
+                                            @default
+                                                <span class="text-muted">Status tidak diketahui.</span>
+                                        @endswitch
+                                    </h4>
+                                    @if (!empty($submission->status_message))
+                                        <div class="alert {{ $status === 'rejected' ? 'alert-danger' : 'alert-info' }} mt-3"
+                                            role="alert">
+                                            {{ $submission->status_message }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -155,7 +315,7 @@
                                         </li>
 
                                         <li class="social-icon-item">
-                                            <a href="#" class="social-icon-link bi-linkedin"></a>
+                                            <a href="#" class="social-icon-link bi-instagram"></a>
                                         </li>
                                     </ul>
 
@@ -608,6 +768,27 @@
             </div>
         </section>
 
+         <section class="section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 text-center">
+                        <h3 class="mb-4">Kerja Sama yang Sedang Berlangsung</h3>
+                    </div>
+
+                    <div id="submissionCards" class="col-lg-12 col-12 mt-3 mx-auto">
+                        <!-- Kartu akan diisi lewat jQuery -->
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        <nav>
+                            <ul id="pagination" class="pagination justify-content-center mb-0"></ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <section class="faq-section section-padding" id="section_4">
             <div class="container">
                 <div class="row">
@@ -679,7 +860,7 @@
                                         </ol>
                                         <p class="mt-4">
                                             Jika ada pertanyaan lebih lanjut, silakan hubungi
-                                            <a href="mailto:info@uinsu.ac.id">info@uinsu.ac.id</a>.
+                                            <a href="mailto:humas@uinsu.ac.id">humas@uinsu.ac.id</a>.
                                         </p>
                                     </div>
                                 </div>
@@ -710,6 +891,8 @@
                 </div>
             </div>
         </section>
+
+       
     </main>
 
     <footer class="site-footer section-padding">
@@ -771,6 +954,118 @@
     <script src="js/jquery.sticky.js"></script>
     <script src="js/click-scroll.js"></script>
     <script src="js/custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            const submissions = {!! json_encode($submissions) !!};
+            console.log(submissions);
+            const perPage = 5;
+            let currentPage = 1;
+            const typeImages = {
+                'SMK': 'undraw_Educator_re_ju47.png',
+                'SMA': 'undraw_Finance_re_gnv2.png',
+                'Perguruan Tinggi': 'undraw_professor_d7zn.png',
+                'Vendor': 'undraw_work-chat_hc3y.png',
+                'Brand': 'undraw_scrum-board_uqku.png',
+                'Pemerintah': 'undraw_working-remotely_ivtz.png',
+                'Lainnya': 'undraw_working-together_r43a.png'
+            };
+
+            function renderCards(page = 1) {
+                const start = (page - 1) * perPage;
+                const end = start + perPage;
+                const sliced = submissions.slice(start, end);
+
+                let html = '';
+                sliced.forEach((item, index) => {
+                    // ambil gambar sesuai tipe institusi
+                    const imgFile = typeImages[item.institution_type] || typeImages['Lainnya'];
+                    const imgSrc = `img/topics/${imgFile}`;
+
+                    html += `
+        <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+          <div class="d-flex">
+            <img src="${imgSrc}" class="custom-block-image img-fluid"  alt="${item.institution_type}">
+
+            <div class="custom-block-topics-listing-info d-flex w-100">
+              <div>
+                <h5 class="mb-2">Jenis Institusi: ${item.institution_type}</h5>
+                <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_name}</p>
+                <p class="mb-0">${item. cooperation_description}</p>
+               
+                <a href="#" class="btn custom-btn mt-3 mt-lg-4">
+                  ${formatDate(item.start_date)} - ${formatDate(item.end_date)}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+                });
+
+                $('#submissionCards').html(html);
+            }
+
+
+            function renderPagination() {
+                const totalPages = Math.ceil(submissions.length / perPage);
+                let paginationHtml = '';
+
+                // Prev Button
+                paginationHtml += `
+    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+      <a class="page-link" href="#" data-page="${currentPage - 1}" aria-label="Previous">
+        <span aria-hidden="true">&laquo; Prev</span>
+      </a>
+    </li>
+  `;
+
+                // Page Numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHtml += `
+      <li class="page-item ${i === currentPage ? 'active' : ''}">
+        <a class="page-link" href="#" data-page="${i}">${i}</a>
+      </li>
+    `;
+                }
+
+                // Next Button
+                paginationHtml += `
+    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+      <a class="page-link" href="#" data-page="${currentPage + 1}" aria-label="Next">
+        <span aria-hidden="true">Next &raquo;</span>
+      </a>
+    </li>
+  `;
+
+                $('#pagination').html(paginationHtml);
+
+                // Page click event
+                $('#pagination .page-link').on('click', function(e) {
+                    e.preventDefault();
+                    const selectedPage = parseInt($(this).data('page'));
+                    if (!isNaN(selectedPage) && selectedPage >= 1 && selectedPage <= totalPages) {
+                        currentPage = selectedPage;
+                        renderCards(currentPage);
+                        renderPagination();
+                    }
+                });
+            }
+
+
+            function formatDate(dateString) {
+                const options = {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                };
+                return new Date(dateString).toLocaleDateString('id-ID', options);
+            }
+
+            renderCards();
+            renderPagination();
+        });
+    </script>
+
 </body>
 
 </html>

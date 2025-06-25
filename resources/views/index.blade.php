@@ -988,8 +988,8 @@
 
             <div class="custom-block-topics-listing-info d-flex w-100">
               <div>
-                <h5 class="mb-2">Jenis Institusi: ${item.institution_type}</h5>
-                <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_name}</p>
+                <h5 class="mb-2"> ${item.institution_name} </h5>
+                <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>
                 <p class="mb-0">${item. cooperation_description}</p>
                
                 <a href="#" class="btn custom-btn mt-3 mt-lg-4">

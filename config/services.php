@@ -31,4 +31,6 @@ return [
         ],
     ],
 
+    'wa_gateway' => env('WA_GATEWAY', 'https://default-url.com/send'),
+
 ];

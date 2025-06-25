@@ -26,7 +26,7 @@ class SendWhatsappJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            $response = Http::post(env('WA_GATEWAY'), [
+            $response = Http::post(config('services.wa_gateway'), [
                 'number' => $this->phone,
                 'message' => $this->message,
             ]);

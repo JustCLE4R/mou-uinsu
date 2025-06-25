@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\superadmin;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MouSubmissions;
 use App\Http\Controllers\Controller;
@@ -79,11 +80,63 @@ class MouController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $data = $request->validated();
+
+        $fileFields = [
+            'letter_file',
+            'proposal_file',
+            'profile_file',
+            'draft_mou_file',
+            'legal_doc_akta',
+            'legal_doc_nib',
+            'legal_doc_operasional',
+        ];
+
+        foreach ($fileFields as $field) {
+            if ($request->hasFile($field)) {
+                $file = $request->file($field);
+                $date = now()->format('Ymd');
+                $uuid = Str::uuid()->toString();
+                $uuid16 = str_replace('-', '', $uuid);
+                $uuid16 = substr($uuid16, 0, 16);
+                $ext = $file->getClientOriginalExtension();
+                $filename = "{$date}-{$uuid16}.{$ext}";
+                $data[$field] = $file->storeAs("mou_submissions/{$field}", $filename, 'public');
+            }
+        }
+
+        $data['status'] = 'approved';
+
+        $data['reference_number'] = self::generateReferenceNumber($data['institution_name']);
+
+
+
+        MouSubmissions::create($data);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(MouSubmissions $mou)
     {
         //
+    }
+
+        public static function generateReferenceNumber($institutionName)
+    {
+        $year = now()->year;
+        // $timestamp = now()->timestamp;
+        $timestamp = (int)(microtime(true) * 1000);
+        
+        // Create a hash from institution name and timestamp
+        $combined = $institutionName . $timestamp;
+        $hash = hash('md5', $combined);
+        
+        // Take last 6 characters and convert to uppercase
+        $randomPart = strtoupper(substr($hash, -6));
+
+        return "MOU-UINSU-{$year}-{$randomPart}";
     }
 }

@@ -55,7 +55,7 @@ class MouSubmissionController extends Controller
                         "Jenis: {$data['institution_type']}\n" .
                         "Alamat: {$data['institution_address']}\n".
                         "Website: {$data['institution_website']}\n\n" .
-                        "Cek status MOU di: https://mou.uinsu.ac.id/status?reference_number={$data['reference_number']}\n\n" .
+                        "Cek status MOU di: " . url("/status?reference_number={$data['reference_number']}") . "\n\n" .
                         "╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n";
 
         WhatsappGateway::send($data['pic_phone'], $message);

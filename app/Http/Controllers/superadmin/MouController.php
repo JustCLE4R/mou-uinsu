@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\superadmin;
 
+use App\Helpers\WhatsappGateway;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MouSubmissions;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\superadmin\MouSubmissionRequest;
 use App\Http\Requests\superadmin\UpdateMouSubmissionRequest;
 
 class MouController extends Controller
@@ -22,7 +24,13 @@ class MouController extends Controller
         }
         
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            if ($request->status === 'postApproved') {
+                $query->where('status', 'approved')
+                    ->whereNull('final_agreement_file')
+                    ->whereNull('final_mou_file');
+            } else {
+                $query->where('status', $request->status);
+            }
         } else {
             $query->orderByRaw("CASE WHEN status = 'review' THEN 1 WHEN status = 'pending' THEN 2 ELSE 3 END")->orderBy('created_at', 'asc');
         }
@@ -31,14 +39,20 @@ class MouController extends Controller
             $search = $request->search;
             $query->where(function($q) use ($search) {
             $q->where('institution_name', 'like', "%{$search}%")
-                ->orWhere('cooperation_title', 'like', "%{$search}%")
-                ->orWhere('pic_name', 'like', "%{$search}%");
+            ->orWhere('cooperation_title', 'like', "%{$search}%")
+            ->orWhere('pic_name', 'like', "%{$search}%");
             });
         }
+
+        $postApproved = MouSubmissions::where('status', 'approved')
+            ->whereNull('final_agreement_file')
+            ->whereNull('final_mou_file')
+            ->get();
 
         return view('superadmin.mou.index', [
             'title' => 'MoU Submissions',
             'submissions' => $query->latest()->paginate(10)->appends(request()->query()),
+            'postApproved' => $postApproved,
         ]);
     }
 
@@ -59,19 +73,21 @@ class MouController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(MouSubmissions $mou)
+    {
+        // 
+    }
+
+    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMouSubmissionRequest $request, MouSubmissions $mou)
+    public function update(MouSubmissions $mou)
     {
-        $mou->status = $request->status;
-        $mou->status_message = $request->status_message;
-        $mou->status_updated_at = now();
-        $mou->save();
-
-        return redirect()
-            ->route('superadmin.mou.index', $mou->id)
-            ->with('success', 'Status pengajuan berhasil diperbarui.');
+        // 
     }
+    
 
     public function create()
     {
@@ -80,7 +96,7 @@ class MouController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(MouSubmissionRequest $request)
     {
         $data = $request->validated();
 
@@ -112,8 +128,32 @@ class MouController extends Controller
         $data['reference_number'] = self::generateReferenceNumber($data['institution_name']);
 
 
-
         MouSubmissions::create($data);
+
+        return redirect()->route('superadmin.mou.index')->with('success', 'Pengajuan MoU berhasil dibuat.');
+    }
+
+    public function judge(UpdateMouSubmissionRequest $request, MouSubmissions $mou)
+    {
+        $mou->status = $request->status;
+        $mou->status_message = $request->status_message;
+        $mou->status_updated_at = now();
+        $mou->save();
+
+        // If the status is approved or rejected send an whatsapp notification and the message is there any
+        if (in_array($mou->status, ['approved', 'rejected'])) {
+            $statusText = $mou->status === 'approved' ? 'disetujui' : 'ditolak';
+            $message = "Pengajuan MoU dari {$mou->institution_name} telah *{$statusText}* oleh Universitas Islam Negeri Sumatera Utara.";
+            if ($mou->status_message) {
+                $message .= "\n\nCatatan:\n{$mou->status_message}";
+            }
+
+            WhatsappGateway::send($mou->pic_phone, $message);
+        }
+
+        return redirect()
+            ->route('superadmin.mou.index', $mou->id)
+            ->with('success', 'Status pengajuan berhasil diperbarui.');
     }
 
     /**

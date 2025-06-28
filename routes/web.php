@@ -36,7 +36,15 @@ Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-head
     Route::resource('/department', \App\Http\Controllers\superadmin\DepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
     Route::resource('/kategori', \App\Http\Controllers\superadmin\KategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
     Route::resource('/user', \App\Http\Controllers\superadmin\UserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
-    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->except(['edit', 'destroy'])->names('superadmin.mou');
+    Route::resource('/mou', \App\Http\Controllers\superadmin\MouController::class)->parameters(['mou' => 'mou'])->names('superadmin.mou');
+    Route::patch('/mou/{mou}/judge', [\App\Http\Controllers\superadmin\MouController::class, 'judge'])->name('superadmin.mou.judge');
+
+    Route::get('/mou-gallery/{mouSubmissionId}', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'show'])->name('superadmin.mou.gallery.show');
+    Route::get('/mou-gallery/create/{mouSubmissionId}', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'create'])->name('superadmin.mou.gallery.create');
+    Route::post('/mou-gallery/store/{mouSubmissionId}', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'store'])->name('superadmin.mou.gallery.store');
+    Route::get('/mou-gallery/{mouGalleries}/edit', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'edit'])->name('superadmin.mou.gallery.edit');
+    Route::patch('/mou-gallery/{mouGalleries}', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'update'])->name('superadmin.mou.gallery.update');
+    Route::delete('/mou-gallery/{mouGalleries}', [\App\Http\Controllers\superadmin\MouGalleryController::class, 'destroy'])->name('superadmin.mou.gallery.destroy');
 
     Route::get('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'index'])->name('superadmin.setting.index');
     Route::put('/setting', [\App\Http\Controllers\superadmin\SettingController::class, 'update'])->name('superadmin.setting.update');

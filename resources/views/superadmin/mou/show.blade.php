@@ -71,10 +71,10 @@
                                     <div class="col-sm-6 col-md-4 my-2">
                                         <div class="card border-0 shadow h-100"
                                             style="
-                                                  background-color: #ffffff !important;
-                                                  transition: transform 0.3s ease, box-shadow 0.3s ease;
-                                                  border-radius: 12px;
-                                                  cursor: pointer;
+                                                background-color: #ffffff !important;
+                                                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                                                border-radius: 12px;
+                                                cursor: pointer;
                                                 "
                                             onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.1)'"
                                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.05)'">
@@ -143,11 +143,11 @@
                                     <strong>Status:</strong>
                                     <span
                                         class="badge  text-light
-                  @if ($submission->status == 'pending') bg-warning
-                  @elseif($submission->status == 'review') bg-info
-                  @elseif($submission->status == 'approved') bg-success
-                  @elseif($submission->status == 'rejected') bg-danger @endif
-                ">{{ ucfirst($submission->status) }}</span>
+                                        @if ($submission->status == 'pending') bg-warning
+                                        @elseif($submission->status == 'review') bg-info
+                                        @elseif($submission->status == 'approved') bg-success
+                                        @elseif($submission->status == 'rejected') bg-danger @endif
+                                        ">{{ ucfirst($submission->status) }}</span>
                                 </div>
                                 <div class="col-md-4"><strong>Pesan Status:</strong>
                                     {{ $submission->status_message ?? '-' }}</div>
@@ -160,7 +160,7 @@
                     <div class="modal fade" id="ubahStatusModal" tabindex="-1" aria-labelledby="ubahStatusModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                            <form action="{{ route('superadmin.mou.update', $submission->id) }}" method="POST"
+                            <form action="{{ route('superadmin.mou.judge', $submission->id) }}" method="POST"
                                 class="modal-content  shadow-sm border-0">
                                 @csrf
                                 @method('PATCH')

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -20,7 +20,7 @@
         <div class="containers" style="height: 1302px !important;">
             <h5>Form Pengajuan MOU</h5>
 
-            <form method="POST" action="{{ route('mou-submission-store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('superadmin.mou.store') }}" enctype="multipart/form-data">
                 @csrf
 
                 <!-- STEP 1 -->

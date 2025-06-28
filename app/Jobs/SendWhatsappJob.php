@@ -33,7 +33,8 @@ class SendWhatsappJob implements ShouldQueue
 
             if (!$response->successful()) {
                 Log::error('WA Gateway failed: ' . $response->body(), [
-                    'number' => $this->phone,
+                    'gateway' => config('services.wa_gateway'),
+                    'phone' => $this->phone,
                     'message' => $this->message,
                 ]);
             } else {
@@ -41,6 +42,7 @@ class SendWhatsappJob implements ShouldQueue
             }
         } catch (\Throwable $e) {
             Log::error('WA Gateway exception: ' . $e->getMessage(), [
+                'gateway' => config('services.wa_gateway'),
                 'number' => $this->phone,
                 'message' => $this->message,
             ]);

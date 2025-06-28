@@ -47,4 +47,9 @@ class MouSubmissions extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function galleries()
+    {
+        return $this->hasMany(MouGalleries::class);
+    }
 }

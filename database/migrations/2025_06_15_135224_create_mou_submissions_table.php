@@ -55,6 +55,9 @@ return new class extends Migration
             $table->timestamp('status_updated_at')->nullable();
             $table->string('reference_number')->nullable();
 
+            $table->string('final_agreement_file')->nullable(); // misal: scan/foto dokumen MOU resmi
+            $table->string('final_mou_file')->nullable();        // PDF versi final (jika ada)
+
             $table->timestamps();
         });
     }

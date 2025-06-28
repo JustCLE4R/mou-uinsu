@@ -7,30 +7,52 @@
     <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Memorandum of Understanding</h2>
     <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
   </div>
-  
+
   <div class="row justify-content-center mt-3 wow fadeInDown">
     <div class="col-6">
-        @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
-            <i class="bi bi-check-circle me-2"></i>
-            {!! session('success') !!}
-        </div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0" role="alert">
-            <i class="bi bi-exclamation-circle me-2"></i>
-            {{ session('error') }}
-        </div>
-        @endif
+      @if (session('success'))
+      <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert">
+        <i class="bi bi-check-circle me-2"></i>
+        {!! session('success') !!}
+      </div>
+      @endif
+      @if (session('error'))
+      <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0" role="alert">
+        <i class="bi bi-exclamation-circle me-2"></i>
+        {{ session('error') }}
+      </div>
+      @endif
     </div>
-</div>
+  </div>
   <div class="container border rounded shadow p-4" style="width:90%;">
-    <a href="/superadmin"  class="text-primary wow fadeInRight mb-5" ata-wow-delay="0.3s"><i class="bi bi-chevron-double-left"></i> Kembali</a>
-    <div class="row justify-content-between pb-4">
+
+  {{-- make an green text alert the admin that there are approved submissions without final documents --}}
+  @if ($postApproved->count() > 0)
+  <div class="row justify-content-center mt-3 wow fadeInDown">
+    <div class="col-12">
+      <div class="bg-success text-white p-3 rounded shadow-sm border-0 position-relative" id="mouAlert">
+        <button type="button" class="btn btn-sm btn-outline-light position-absolute" style="top: 10px; right: 10px;" onclick="document.getElementById('mouAlert').style.display='none'" aria-label="Close">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <div class="col-11">
+          <i class="bi bi-info-circle me-2"></i>
+          <strong>Perhatian:</strong> Terdapat <span class="fw-bold">{{ $postApproved->count() }}</span> pengajuan MoU
+          yang telah disetujui namun belum memiliki dokumen final. Silakan lengkapi dokumen tersebut. <a class="text-white" style="text-decoration: underline;" href="?status=postApproved">klik disini untuk menampilkan pengajuan yang belum lengkap!</a>
+        </div>
+      </div>
       
+    </div>
+  </div>
+  @endif
+
+    <a href="/superadmin" class="text-primary wow fadeInRight mb-5" ata-wow-delay="0.3s"><i
+        class="bi bi-chevron-double-left"></i> Kembali</a>
+    <div class="row justify-content-between pb-4">
+
       <div class="col-lg-4 col-md-6 col-sm-12 mb-2 mb-md-0">
-        
-        <a href="{{ route('superadmin.mou.create') }}" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i class="bi bi-plus"></i> Tambah Dokumen</a>
+
+        <a href="{{ route('superadmin.mou.create') }}" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i
+            class="bi bi-plus"></i> Tambah Dokumen</a>
       </div>
       <div class="col-lg-5 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="{{ route('superadmin.mou.index') }}" method="get">
@@ -38,16 +60,19 @@
             <select class="form-select p-1 bg-success text-light shadow" name="institution_type" style="width: 120px;">
               <option value="">Tipe Institusi</option>
               @foreach (['SMK', 'SMA', 'Perguruan Tinggi', 'Vendor', 'Brand', 'Pemerintah', 'Lainnya'] as $type)
-                <option value="{{ $type }}" {{ request('institution_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+              <option value="{{ $type }}" {{ request('institution_type')==$type ? 'selected' : '' }}>{{ $type }}
+              </option>
               @endforeach
             </select>
             <select class="form-select p-1 bg-success text-light shadow" name="status" style="width: 110px;">
               <option value="">Status</option>
               @foreach (['pending', 'review', 'approved', 'rejected'] as $status)
-                <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
+              <option value="{{ $status }}" {{ request('status')==$status ? 'selected' : '' }}>{{ ucfirst($status) }}
+              </option>
               @endforeach
             </select>
-            <input type="text" class="form-control shadow" name="search" placeholder="Cari Institusi / Judul.." value="{{ request('search') }}">
+            <input type="text" class="form-control shadow" name="search" placeholder="Cari Institusi / Judul.."
+              value="{{ request('search') }}">
             <div class="input-group-append">
               <button class="btn btn-search" id="button-addon2"><i class="bi bi-search"></i></button>
             </div>
@@ -84,29 +109,46 @@
           <th>Penanggung Jawab</th>
           <th>Judul Kerja Sama</th>
           <th>Status</th>
-          {{-- <th class="text-center">Aksi</th> --}}
+          <th class="text-center" width="100">Aksi</th>
         </tr>
         @foreach ($submissions as $submission)
-          <tr>
-            <td class="text-center">{{ $submissions->firstItem() + $loop->index }}</td>
-            <td>
-              <a class="text-success" href="{{ route('superadmin.mou.show', $submission->id) }}">
-                {{ $submission->institution_name }}
-              </a>
-            </td>
-            <td>{{ $submission->institution_type }}</td>
-            <td>
-              {{ $submission->pic_name }}<br>
-              <small>{{ $submission->pic_phone }}</small>
-            </td>
-            <td>{{ $submission->cooperation_title }}</td>
-            <td>
-              <span class="badge text-white bg-{{ $submission->status == 'approved' ? 'success' : ($submission->status == 'rejected' ? 'danger' : ($submission->status == 'review' ? 'primary' : 'warning')) }}">
-                {{ ucfirst($submission->status) }}
-              </span>
-            </td>
-          
-          </tr>
+        <tr>
+          <td class="text-center">{{ $submissions->firstItem() + $loop->index }}</td>
+          <td>
+            <a class="text-success" href="{{ route('superadmin.mou.show', $submission->id) }}">
+              {{ $submission->institution_name }}
+            </a>
+          </td>
+          <td>{{ $submission->institution_type }}</td>
+          <td>
+            {{ $submission->pic_name }}<br>
+            <small>{{ $submission->pic_phone }}</small>
+          </td>
+          <td>{{ $submission->cooperation_title }}</td>
+          <td>
+            <span
+              class="badge text-white bg-{{ $submission->status == 'approved' ? 'success' : ($submission->status == 'rejected' ? 'danger' : ($submission->status == 'review' ? 'primary' : 'warning')) }}">
+              {{ ucfirst($submission->status) }}
+            </span>
+          </td>
+          <td class="text-center">
+            {{-- make button for adding image gallery for {{ $submission->id }} --}}
+            @if($submission->status == 'approved')
+            <a class="text-warning" href="{{ route('superadmin.mou.gallery.show', $submission->id) }}"><i
+                class="bi bi-image"></i></a>
+            @endif
+            <a class="text-primary" href="{{ route('superadmin.mou.show', $submission->id) }}"><i
+                class="bi bi-eye"></i></a>
+            <a class="text-success" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i
+                class="bi bi-pencil-square"></i></a>
+            <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post"
+              onsubmit="return confirm('Yakin hapus pengajuan ini?')">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i
+                  class="bi bi-trash"></i></button>
+            </form>
+        </tr>
         @endforeach
       </table>
     </div>
@@ -123,11 +165,17 @@
 
 
 
-  {{-- <td class="text-center">
-              <a class="text-primary" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i class="bi bi-pencil-square"></i></a>
-              <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post" onsubmit="return confirm('Yakin hapus pengajuan ini?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i class="bi bi-trash"></i></button>
-              </form>
-            </td> --}}
+{{-- <td class="text-center">
+  <a class="text-primary" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i
+      class="bi bi-pencil-square"></i></a>
+  <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post"
+    onsubmit="return confirm('Yakin hapus pengajuan ini?')">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i class="bi bi-trash"></i></button>
+  </form>
+</td> --}}
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+@endpush

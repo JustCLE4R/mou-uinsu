@@ -70,7 +70,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 col-12 mx-auto">
-                        <h1 class="text-white text-center">Cek Status MOU Anda</h1>
+                        <h1 class="text-white text-center">APLIKASI SI-KERMA UINSU </h1>
                         <h6 class="text-center">
                             Kami mengundang lembaga, instansi, sekolah, industri, dan mitra strategis lainnya untuk
                             membangun kolaborasi yang berdampak.
@@ -89,9 +89,9 @@
                                 <span class="input-group-text bi-search" id="basic-addon1"></span>
                                 <input style="margin-bottom: 0px !important; border: none !important;"
                                     name="reference_number" type="text" class="form-control" id="reference_number"
-                                    placeholder="Masukkan nomor referensi pengajuan"
+                                    placeholder="Masukkan nomor referensi pengajuan untuk cek status anda"
                                     value="{{ request('reference_number') }}" required />
-                                <button type="submit" class="btn btn-primary">Cari</button>
+                                <button type="submit" class="btn btn-primary">Cek Status</button>
                             </div>
                         </form>
 

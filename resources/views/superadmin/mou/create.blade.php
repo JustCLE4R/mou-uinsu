@@ -41,13 +41,15 @@
                             <label for="institution_type" class="form-label">Jenis Institusi</label>
                             <select class="form-select @error('institution_type') is-invalid @enderror"
                                 id="institution_type" name="institution_type" required>
-                                <option selected disabled>Pilih jenis institusi...</option>
+                                <option value="" selected disabled>Pilih jenis institusi...</option>
                                 @foreach (['SMK', 'SMA', 'Perguruan Tinggi', 'Vendor', 'Brand', 'Pemerintah', 'Lainnya'] as $type)
                                     <option value="{{ $type }}"
                                         {{ old('institution_type') == $type ? 'selected' : '' }}>
-                                        {{ $type }}</option>
+                                        {{ $type }}
+                                    </option>
                                 @endforeach
                             </select>
+
                             @error('institution_type')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -147,7 +149,8 @@
                             <div>
                                 @foreach (['Pendidikan', 'Penelitian', 'Magang', 'Sponsor'] as $scope)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('cooperation_scope') is-invalid @enderror"
+                                        <input required
+                                            class="form-check-input @error('cooperation_scope') is-invalid @enderror"
                                             type="checkbox" name="cooperation_scope[]" value="{{ $scope }}"
                                             id="scope_{{ $loop->index }}"
                                             {{ is_array(old('cooperation_scope')) && in_array($scope, old('cooperation_scope')) ? 'checked' : '' }}>
@@ -236,7 +239,7 @@
 
         </div>
     </div>
-        <!-- JAVASCRIPT FILES -->
+    <!-- JAVASCRIPT FILES -->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery.sticky.js"></script>

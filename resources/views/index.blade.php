@@ -55,6 +55,9 @@
                             <a class="nav-link " href="/status">Cek Status</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('mou-galleries.index') }}">Galeri</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link " href="/login">Login</a>
                         </li>
                     </ul>
@@ -930,7 +933,7 @@
                     <h6 class="site-footer-title mb-3">Informasi Kontak</h6>
                     <p class=" d-flex mb-1">
                         <i class="bi-telephone me-2"></i>
-                        <a href="tel:+620000000000" class="site-footer-link">+62 000-0000-0000</a>
+                        <a href="tel:0616615683" class="site-footer-link">(061) 6615683 – 6622925</a>
                     </p>
                     <p class=" d-flex">
                         <i class="bi-envelope me-2"></i>
@@ -981,25 +984,40 @@
                     const imgFile = typeImages[item.institution_type] || typeImages['Lainnya'];
                     const imgSrc = `img/topics/${imgFile}`;
 
-                    html += `
-        <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
-          <div class="d-flex">
-            <img src="${imgSrc}" class="custom-block-image img-fluid"  alt="${item.institution_type}">
+                    // Check for available files
+                    let fileButton = '';
+                    if (item.final_agreement_file) {
+                        fileButton = `<a href="/storage/${item.final_agreement_file}" target="_blank" class="btn btn-outline-primary mt-3 mt-lg-4 ms-2">Lihat Perjanjian</a>`;
+                    } else if (item.final_mou_file) {
+                        fileButton = `<a href="/storage/${item.final_mou_file}" target="_blank" class="btn btn-outline-primary mt-3 mt-lg-4 ms-2">Lihat MOU</a>`;
+                    }
 
-            <div class="custom-block-topics-listing-info d-flex w-100">
-              <div>
-                <h5 class="mb-2"> ${item.institution_name} </h5>
-                <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>
-                <p class="mb-0">${item. cooperation_description}</p>
-               
-                <a href="#" class="btn custom-btn mt-3 mt-lg-4">
-                  ${formatDate(item.start_date)} - ${formatDate(item.end_date)}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        `;
+                    if(item.gallery_available) {
+                        fileButton += `<a href="/gallery/${item.id}" class="btn btn-outline-secondary mt-3 mt-lg-4 ms-2">Lihat Galeri</a>`;
+                    }
+
+                    html += `
+                <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+                  <div class="d-flex">
+                    <img src="${imgSrc}" class="custom-block-image img-fluid"  alt="${item.institution_type}">
+
+                    <div class="custom-block-topics-listing-info d-flex w-100">
+                      <div>
+                        <h5 class="mb-2"> ${item.institution_name} </h5>
+                        <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>
+                        <p class="mb-0">${item.cooperation_description}</p>
+                       
+                        <div class="d-flex">
+                          <a href="#" class="btn custom-btn mt-3 mt-lg-4">
+                            ${formatDate(item.start_date)} - ${formatDate(item.end_date)}
+                          </a>
+                          ${fileButton}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
                 });
 
                 $('#submissionCards').html(html);

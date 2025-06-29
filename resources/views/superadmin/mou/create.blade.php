@@ -149,7 +149,7 @@
                             <div>
                                 @foreach (['Pendidikan', 'Penelitian', 'Magang', 'Sponsor'] as $scope)
                                     <div class="form-check form-check-inline">
-                                        <input required
+                                        <input
                                             class="form-check-input @error('cooperation_scope') is-invalid @enderror"
                                             type="checkbox" name="cooperation_scope[]" value="{{ $scope }}"
                                             id="scope_{{ $loop->index }}"

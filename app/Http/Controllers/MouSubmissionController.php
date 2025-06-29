@@ -47,7 +47,7 @@ class MouSubmissionController extends Controller
         MouSubmissions::create($data);
 
         // Notify the partner via WhatsApp
-        $message = "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\n" . 
+        $message = "╔═*.·:·.✧ *UINSU MEDAN* ✧.·:·.*═╗\n\n" . 
                         "MOU submission received\n\n" .
                         "Reference Number: *{$data['reference_number']}*\n\n" .
                         "Informasi Institusi:\n" .
@@ -56,7 +56,7 @@ class MouSubmissionController extends Controller
                         "Alamat: {$data['institution_address']}\n".
                         "Website: {$data['institution_website']}\n\n" .
                         "Cek status MOU di: " . url("/status?reference_number={$data['reference_number']}") . "\n\n" .
-                        "╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n";
+                        "╚═══*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═══╝\n";
 
         WhatsappGateway::send($data['pic_phone'], $message);
 
@@ -70,7 +70,7 @@ class MouSubmissionController extends Controller
             $data['pic_phone'] = '62' . substr($data['pic_phone'], 1);
         }
 
-        $adminMessage = "╔══*.·:·.✧ *UINSU MEDAN* ✧.·:·.*══╗\n\n" . 
+        $adminMessage = "╔═*.·:·.✧ *UINSU MEDAN* ✧.·:·.*═╗\n\n" . 
                         "New MOU submission received\n\n" .
                         "Reference Number: *{$data['reference_number']}*\n\n" .
                         "Informasi Institusi:\n" .
@@ -79,7 +79,7 @@ class MouSubmissionController extends Controller
                         "Alamat: {$data['institution_address']}\n".
                         "Website: {$data['institution_website']}\n".
                         "Whatsapp: wa.me/{$data['pic_phone']}\n\n" .
-                        "╚═════*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═════╝\n";
+                        "╚═══*.·:·.✧ ✦ ✧ ✦ ✧.·:·.*═══╝\n";
 
         WhatsappGateway::send($adminPhone, $adminMessage);
         

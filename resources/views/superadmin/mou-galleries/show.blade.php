@@ -38,6 +38,15 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Gallery Image</h5>
+                                        <div class="modal-footer justify-content-center">
+                                            <form action="{{ route('superadmin.mou.gallery.destroy', $gallery->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus foto ini?')">
+                                                    <i class="bi bi-trash"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </div>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                             <i class="bi bi-x-lg"></i>
                                         </button>
@@ -50,6 +59,7 @@
                                             <p class="mt-3 mb-0">{{ $gallery->caption }}</p>
                                         @endif
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -25,11 +25,21 @@
             "
         >
             <div class="card-body">
+              {{-- print all error --}}
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+              @endif
                 <form action="{{ route('superadmin.mou.gallery.store', $submission->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="image_path" class="form-label">Foto <span class="text-danger">*</span></label>
-                        <input type="file" name="image_path[]" id="image_path" class="form-control @error('image_path') is-invalid @enderror" accept="image/*" multiple required>
+                        <input type="file" name="image_path[]" id="image_path" class="form-control @error('image_path') is-invalid @enderror" accept=".jpeg,.png,.jpg,.gif" multiple required>
                         <div id="preview-container" class="mt-3"></div>
                         @error('image_path')
                             <div class="invalid-feedback">{{ $message }}</div>

@@ -41,6 +41,11 @@ class MouGalleryController extends Controller
         // Validate the request
         $request->validate([
             'image_path.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'image_path.*.required' => 'Each image is required.',
+            'image_path.*.image' => 'Each file must be an image.',
+            'image_path.*.mimes' => 'Each image must be a file of type: jpeg, png, jpg, gif.',
+            'image_path.*.max' => 'Each image may not be greater than 2MB.',
         ]);
 
         // Check if the submission exists and status is 'approved'
@@ -104,6 +109,13 @@ class MouGalleryController extends Controller
      */
     public function destroy(MouGalleries $mouGalleries)
     {
-        //
+        $mouGalleries->delete();
+
+        // Delete the image file from storage
+        if (file_exists(public_path('storage/' . $mouGalleries->image_path))) {
+            unlink(public_path('storage/' . $mouGalleries->image_path));
+        }
+
+        return redirect()->back()->with('success', 'Gallery image deleted successfully.');
     }
 }

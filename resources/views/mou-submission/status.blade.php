@@ -293,7 +293,7 @@
                     <h6 class="site-footer-title mb-3">Informasi Kontak</h6>
                     <p class=" d-flex mb-1">
                         <i class="bi-telephone me-2"></i>
-                        <a href="tel:+620000000000" class="site-footer-link">+62 000-0000-0000</a>
+                        <a href="tel:0616615683" class="site-footer-link">(061) 6615683 – 6622925</a>
                     </p>
                     <p class=" d-flex">
                         <i class="bi-envelope me-2"></i>

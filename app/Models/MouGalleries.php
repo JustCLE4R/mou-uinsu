@@ -11,8 +11,8 @@ class MouGalleries extends Model
         'id',
     ];
 
-    public function mou()
+    public function mouSubmission()
     {
-        return $this->belongsTo(MouSubmissions::class);
+        return $this->belongsTo(MouSubmissions::class, 'mou_submission_id');
     }
 }

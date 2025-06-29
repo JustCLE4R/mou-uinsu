@@ -9,6 +9,10 @@ Route::post('/submission', [\App\Http\Controllers\MouSubmissionController::class
 Route::get('/submitted-success', [\App\Http\Controllers\MouSubmissionController::class, 'success'])->name('mou-submission.submitted');
 Route::get('/status', [\App\Http\Controllers\MouSubmissionController::class, 'status'])->name('mou-submission.status');
 
+Route::get('/gallery', [\App\Http\Controllers\MouGalleriesController::class, 'index'])->name('mou-galleries.index');
+Route::get('/gallery/{MouSubmission}', [\App\Http\Controllers\MouGalleriesController::class, 'show'])->name('mou-galleries.show');
+
+
 Route::middleware(['guest', 'no-cache', 'security-header'])->group(function () {    
     Route::get('/login', [\App\Http\Controllers\LoginController::class, 'index'])->name('login');
     Route::post('/login', [\App\Http\Controllers\LoginController::class, 'authenticate']);

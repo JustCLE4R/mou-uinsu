@@ -139,15 +139,37 @@
             @endif
             <a class="text-primary" href="{{ route('superadmin.mou.show', $submission->id) }}"><i
                 class="bi bi-eye"></i></a>
+            @if($submission->status == 'approved')
             <a class="text-success" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i
                 class="bi bi-pencil-square"></i></a>
-            <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post"
-              onsubmit="return confirm('Yakin hapus pengajuan ini?')">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i
-                  class="bi bi-trash"></i></button>
-            </form>
+            @endif
+            <a class="text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $submission->id }}"><i class="bi bi-trash"></i></a>
+            <!-- Delete Modal -->
+            <div class="modal fade" id="deleteModal{{ $submission->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $submission->id }}" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ $submission->id }}">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="alert-dismissible alert-warning" role="alert">
+                  <i class="bi bi-exclamation-triangle me-2"></i>
+                  Apakah Anda yakin ingin menghapus pengajuan MoU dari <strong>{{ $submission->institution_name }}</strong>?
+                </div>
+                <p class="mb-0">Tindakan ini tidak dapat dibatalkan.</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+                </div>
+              </div>
+              </div>
+            </div>
         </tr>
         @endforeach
       </table>
@@ -158,23 +180,8 @@
     </div>
   </div>
 
-
 </section>
 @endsection
-
-
-
-
-{{-- <td class="text-center">
-  <a class="text-primary" href="{{ route('superadmin.mou.edit', $submission->id) }}"><i
-      class="bi bi-pencil-square"></i></a>
-  <form class="d-inline" action="{{ route('superadmin.mou.destroy', $submission->id) }}" method="post"
-    onsubmit="return confirm('Yakin hapus pengajuan ini?')">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline"><i class="bi bi-trash"></i></button>
-  </form>
-</td> --}}
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>

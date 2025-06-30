@@ -1017,10 +1017,10 @@
 
         html += `
             <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
-                <div class="d-flex">
+                <div class="d-flex " >
                     <img src="${imgSrc}" class="custom-block-image img-fluid" alt="${item.institution_type}">
 
-                    <div class="custom-block-topics-listing-info d-flex w-100">
+                    <div class="custom-block-topics-listing-info d-flex w-100" style="    margin: 30px 2px -3px 2px !important;">
                         <div>
                             <h5 class="mb-2">${item.institution_name}</h5>
                             <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>

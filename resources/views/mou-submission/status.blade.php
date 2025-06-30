@@ -213,7 +213,7 @@
                                             <div class="step-circle-animated {{ $circleClass }}">
                                                 {!! $icon !!}
                                             </div>
-                                            <div class="mt-2 fw-semibold text-secondary small">{{ $label }}</div>
+                                            <div class="mt-2 fw-semibold text-light small">{{ $label }}</div>
                                         </div>
                                     @endforeach
                                 </div>

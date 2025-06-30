@@ -973,55 +973,77 @@
                 'Lainnya': 'undraw_working-together_r43a.png'
             };
 
-            function renderCards(page = 1) {
-                const start = (page - 1) * perPage;
-                const end = start + perPage;
-                const sliced = submissions.slice(start, end);
+           function renderCards(page = 1) {
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const sliced = submissions.slice(start, end);
 
-                let html = '';
-                sliced.forEach((item, index) => {
-                    // ambil gambar sesuai tipe institusi
-                    const imgFile = typeImages[item.institution_type] || typeImages['Lainnya'];
-                    const imgSrc = `img/topics/${imgFile}`;
+    let html = '';
+    sliced.forEach((item, index) => {
+        // ambil gambar sesuai tipe institusi
+        const imgFile = typeImages[item.institution_type] || typeImages['Lainnya'];
+        const imgSrc = `img/topics/${imgFile}`;
 
-                    // Check for available files
-                    let fileButton = '';
-                    if (item.final_agreement_file) {
-                        fileButton = `<a href="/storage/${item.final_agreement_file}" target="_blank" class="btn btn-outline-primary mt-3 mt-lg-4 ms-2">Lihat Perjanjian</a>`;
-                    } else if (item.final_mou_file) {
-                        fileButton = `<a href="/storage/${item.final_mou_file}" target="_blank" class="btn btn-outline-primary mt-3 mt-lg-4 ms-2">Lihat MOU</a>`;
-                    }
+        // tombol dokumen & galeri
+        let fileButton = '';
 
-                    if(item.gallery_available) {
-                        fileButton += `<a href="/gallery/${item.id}" class="btn btn-outline-secondary mt-3 mt-lg-4 ms-2">Lihat Galeri</a>`;
-                    }
+        if (item.final_agreement_file) {
+            fileButton += `
+                <div class="col-12 col-md-auto">
+                    <a href="/storage/${item.final_agreement_file}" target="_blank" class="btn custom-btn w-100" style="background-color: #5eabd6 !important;">
+                        <i class="bi bi-file-earmark-text me-1"></i> Lihat Perjanjian
+                    </a>
+                </div>
+            `;
+        } else if (item.final_mou_file) {
+            fileButton += `
+                <div class="col-12 col-md-auto">
+                    <a href="/storage/${item.final_mou_file}" target="_blank" class="btn custom-btn w-100">
+                        <i class="bi bi-file-earmark-text me-1"></i> Lihat MOU
+                    </a>
+                </div>
+            `;
+        }
 
-                    html += `
-                <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
-                  <div class="d-flex">
-                    <img src="${imgSrc}" class="custom-block-image img-fluid"  alt="${item.institution_type}">
+        if (item.gallery_available) {
+            fileButton += `
+                <div class="col-12 col-md-auto">
+                    <a href="/gallery/${item.id}" class="btn custom-btn w-100" style="background-color: #254d70 !important;">
+                        <i class="bi bi-images me-1"></i> Lihat Galeri
+                    </a>
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+                <div class="d-flex">
+                    <img src="${imgSrc}" class="custom-block-image img-fluid" alt="${item.institution_type}">
 
                     <div class="custom-block-topics-listing-info d-flex w-100">
-                      <div>
-                        <h5 class="mb-2"> ${item.institution_name} </h5>
-                        <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>
-                        <p class="mb-0">${item.cooperation_description}</p>
-                       
-                        <div class="d-flex">
-                          <a href="#" class="btn custom-btn mt-3 mt-lg-4">
-                            ${formatDate(item.start_date)} - ${formatDate(item.end_date)}
-                          </a>
-                          ${fileButton}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                `;
-                });
+                        <div>
+                            <h5 class="mb-2">${item.institution_name}</h5>
+                            <p class="mb-0"><strong>${item.cooperation_title}</strong> - ${item.institution_type}</p>
+                            <p class="mb-0">${item.cooperation_description}</p>
 
-                $('#submissionCards').html(html);
-            }
+                            <div class="row g-2 mt-3">
+                                <div class="col-12 col-md-auto">
+                                    <a href="#" class="btn custom-btn w-100">
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        ${formatDate(item.start_date)} - ${formatDate(item.end_date)}
+                                    </a>
+                                </div>
+                                ${fileButton}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    $('#submissionCards').html(html);
+}
 
 
             function renderPagination() {
